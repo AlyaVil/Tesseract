@@ -49,3 +49,22 @@ void mousePressed(){
   buttonZW.press(mouseX,mouseY);
   if (mouseY<height-buttonXY.w) tesseract = new Tesseract();
 }
+void mouseReleased(){
+  buttonXY.press(mouseX,mouseY);
+  buttonXZ.press(mouseX,mouseY);
+  buttonYZ.press(mouseX,mouseY);
+  buttonXW.press(mouseX,mouseY);
+  buttonYW.press(mouseX,mouseY);
+  buttonZW.press(mouseX,mouseY);
+}
+
+class Tesseract{
+  float[][][] lines;
+  float x, y, z, w, perspZ, perspW, size;
+  
+  Tesseract(){
+    size=width/24;
+    z=5;
+    w=1;
+    perspZ=4;
+    perspW=1;
