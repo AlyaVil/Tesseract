@@ -129,3 +129,75 @@ class Tesseract{
         arr[i][j][1]=arr[i][j][1]+(arr[i][j][1]+y)*((arr[i][j][2]+z)/perspZ+(arr[i][j][3]+w)/perspW);
       }
   }
+void resize(float[][][] arr){
+    for (int i=0; i<32; i++)
+      for (int j=0; j<2; j++)
+        for (int k=0; k<4; k++)
+          arr[i][j][k]*=size;
+  }
+  
+  void display(){
+    float[][][] temp = new float[32][2][4];
+    for (int i=0; i<32; i++)
+      for (int j=0; j<2; j++)
+        for (int k=0; k<4; k++)
+          temp[i][j][k]=lines[i][j][k];
+    persp(temp);
+    resize(temp);
+    for (int i=0; i<32; i++)
+      line(temp[i][0][0],temp[i][0][1],temp[i][1][0],temp[i][1][1]);
+  }
+}
+
+class Button{
+  boolean pressed;
+  float x,y,w,h;
+  final float cDiff=100,c=255/2,txtc=255;
+  String txt;
+  
+  Button(float x, float y, float w, float h, String txt){
+    this.x=x; this.y=y; this.w=w;
+    this.h=h; this.txt=txt;
+  }
+  
+  void press(float mx, float my){
+    pressed = (abs(mx-x)<w/2)&&(abs(my-y)<h/2)&&(mousePressed);
+  }
+  
+  void display(){
+    pushMatrix();
+    pushStyle();
+    
+    rectMode(CENTER);
+    textAlign(CENTER,CENTER);
+    stroke(0);
+    strokeWeight(3);
+    
+    if (pressed) fill(c-cDiff);
+    else fill(c);
+    
+    rect(x,y,w,h);
+    
+    if (pressed) fill(txtc-cDiff);
+    else fill(txtc);
+    
+    textSize(h*2/3);
+    text(txt,x,y);
+    
+    popStyle();
+    popMatrix();
+  }
+}
+
+class Toggle extends Button{
+  boolean pushed;
+  
+  Toggle(float x, float y, float w, float h, String text){
+    super(x, y, w, h, text);
+  }
+  
+  void press(float mx, float my){
+    pushed = (abs(mx-x)<w/2)&&(abs(my-y)<h/2)&&(mousePressed);
+    if (pushed) pressed = !pressed;
+  }
+}
