@@ -200,4 +200,4 @@ class Toggle extends Button{
     pushed = (abs(mx-x)<w/2)&&(abs(my-y)<h/2)&&(mousePressed);
     if (pushed) pressed = !pressed;
   }
-}
+
